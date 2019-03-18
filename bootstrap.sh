@@ -1,9 +1,9 @@
 #!/bin/bash
 echo "installing ansible"
-sudo apt-get update
-sudo apt-get install software-properties-common
-sudo apt-add-repository --yes --update ppa:ansible/ansible
-sudo apt-get install ansible
+apt-get -y install software-properties-common
+apt-add-repository -y ppa:ansible/ansible
+apt-get update
+apt-get -y install ansible
 
 cat >> /home/vagrant/ansible.cfg << EOF
 [defaults]
