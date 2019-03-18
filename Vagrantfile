@@ -26,8 +26,7 @@ Vagrant.configure("2") do |config|
    # db.vm.box = "ubuntu/xenial64"
     #db.vm.hostname = "Database"
     #db.vm.network :private_network, ip:"192.168.15.3"
-    #db.vm.synced_folder""
-    #db.vm.synced_folder"
+    #db.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
 
     #db.vm.provider "virtualbox" do |vb|
      # vb.memory = "512"
@@ -41,8 +40,7 @@ Vagrant.configure("2") do |config|
    # loadBalancing.vm.hostname = "LoadBalancer"
    # loadBalancing.vm.network :private_network, ip:"192.168.15.4"
    # loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
-    #loadBalancing.vm.synced_folder""
-    #loadBalancing.vm.synced_folder"
+   # loadBalancing.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
 
    # loadBalancing.vm.provider "virtualbox" do |vb|
     #  vb.memory = "512"
@@ -56,6 +54,7 @@ Vagrant.configure("2") do |config|
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
+      web.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
     
       web.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
@@ -69,8 +68,7 @@ Vagrant.configure("2") do |config|
     #backend.vm.box = "ubuntu/xenial64"
     #backend.vm.hostname = "Backend"
     #backend.vm.network :private_network, ip:"192.168.15.#{10+i}"
-      #backend.vm.synced_folder""
-      #backend.vm.synced_folder"
+    #backend.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
     
     #  backend.vm.provider "virtualbox" do |vb|
      #   vb.memory = "512"
