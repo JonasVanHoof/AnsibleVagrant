@@ -22,17 +22,17 @@ Vagrant.configure("2") do |config|
   end
 
   #Database
-  #config.vm.define :database do |db|
-   # db.vm.box = "ubuntu/xenial64"
-    #db.vm.hostname = "Database"
-    #db.vm.network :private_network, ip:"192.168.15.3"
-    #db.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
+  config.vm.define :database do |db|
+    db.vm.box = "ubuntu/xenial64"
+    db.vm.hostname = "Database"
+    db.vm.network :private_network, ip:"192.168.15.3"
+    db.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
 
-    #db.vm.provider "virtualbox" do |vb|
-     # vb.memory = "512"
-     # vb.cpus = "1"
-    #end
-  #end
+    db.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.cpus = "1"
+    end
+  end
 
   #LoadBalancer
   #config.vm.define :LoadBalancer do |loadBalancing|
@@ -49,18 +49,18 @@ Vagrant.configure("2") do |config|
   #end
 
   #Webservers
-  (1..4).each do |i|
-    config.vm.define "Web#{i}" do |web|
-      web.vm.box = "ubuntu/xenial64"
-      web.vm.hostname = "Webserver"
-      web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-      web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+  #(1..4).each do |i|
+    #config.vm.define "Web#{i}" do |web|
+      #web.vm.box = "ubuntu/xenial64"
+      #web.vm.hostname = "Webserver"
+      #web.vm.network :private_network, ip:"192.168.15.#{4+i}"
+      #web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
     
-      web.vm.provider "virtualbox" do |vb|
-        vb.memory = "512"
-        vb.cpus = "1"
-    end
-  end
+     # web.vm.provider "virtualbox" do |vb|
+    #    vb.memory = "512"
+   #     vb.cpus = "1"
+  #  end
+  #end
 
   #Backend servers
   #(1..1).each do |i|
@@ -77,7 +77,7 @@ Vagrant.configure("2") do |config|
   #end
 
 #end
-end
+#end
 
 
 
