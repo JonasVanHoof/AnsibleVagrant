@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     management.vm.box = "ubuntu/xenial64"
     management.vm.hostname = "Management"
     management.vm.network :private_network, ip:"192.168.15.2"
-    #management.vm.synced_folder""
+    management.vm.synced_folder "playbooks", "/home/vagrant/playbooks"
     #management.vm.synced_folder"
     management.vm.provision :shell, path: "bootstrap.sh"
 
@@ -51,19 +51,17 @@ Vagrant.configure("2") do |config|
   #end
 
   #Webservers
-  #(1..1).each do |i|
-   # config.vm.define "Web#{i}" do |web|
-    #  web.vm.box = "ubuntu/xenial64"
-     # web.vm.hostname = "Webserver"
-      #web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-      #web.vm.synced_folder""
-      #web.vm.synced_folder"
+  (1..4).each do |i|
+    config.vm.define "Web#{i}" do |web|
+      web.vm.box = "ubuntu/xenial64"
+      web.vm.hostname = "Webserver"
+      web.vm.network :private_network, ip:"192.168.15.#{4+i}"
     
-      #web.vm.provider "virtualbox" do |vb|
-       # vb.memory = "512"
-        #vb.cpus = "1"
-    #end
-  #end
+      web.vm.provider "virtualbox" do |vb|
+        vb.memory = "512"
+        vb.cpus = "1"
+    end
+  end
 
   #Backend servers
   #(1..1).each do |i|
@@ -86,4 +84,4 @@ end
 
 
 
-#end
+end

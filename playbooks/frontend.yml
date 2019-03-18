@@ -1,14 +1,13 @@
 #Web
-- hosts: web
-  tasks:
-    -name: install nginx
-     apt: name=nginx, state=installed
-     command: echo "nginx installed"
+ - hosts: web
+   sudo: yes
+  
+   tasks:
+    - name: Install nginx
+      apt: name=nginx state=present
+    - name: content
+      template: src=labo1_vagrant/frontend_app/index.html dest=/var/www/html/index.html
 
-
-    service:
-      name: nginx
-      state: started
-      become: yes
-      become_method: sudo
-      command: echo "Checked nginx state"
+   handlers:
+    - name: Restart nginx
+      service: name=nginx state=restarted
