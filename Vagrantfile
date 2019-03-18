@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     management.vm.hostname = "Management"
     management.vm.network :private_network, ip:"192.168.15.2"
     management.vm.synced_folder "playbooks", "/home/vagrant/playbooks"
-    #management.vm.synced_folder"
+    management.vm.synced_folder "cfg", "/home/vagrant/cfg"
     management.vm.provision :shell, path: "bootstrap.sh"
 
     management.vm.provider "virtualbox" do |vb|
