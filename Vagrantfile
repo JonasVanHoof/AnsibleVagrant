@@ -22,72 +22,68 @@ Vagrant.configure("2") do |config|
   end
 
   #Database
-  config.vm.define :database do |db|
-    db.vm.box = "ubuntu/xenial64"
-    db.vm.hostname = "Database"
-    db.vm.network :private_network, ip:"192.168.15.3"
+  #config.vm.define :database do |db|
+   # db.vm.box = "ubuntu/xenial64"
+    #db.vm.hostname = "Database"
+    #db.vm.network :private_network, ip:"192.168.15.3"
     #db.vm.synced_folder""
     #db.vm.synced_folder"
-    db.vm.provision :shell, path: "bootstrap.sh"
 
-    db.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.cpus = "1"
-    end
-  end
+    #db.vm.provider "virtualbox" do |vb|
+     # vb.memory = "512"
+     # vb.cpus = "1"
+    #end
+  #end
 
   #LoadBalancer
-  config.vm.define :LoadBalancer do |loadBalancing|
-    loadBalancing.vm.box = "ubuntu/xenial64"
-    loadBalancing.vm.hostname = "LoadBalancer"
-    loadBalancing.vm.network :private_network, ip:"192.168.15.4"
-    loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
+  #config.vm.define :LoadBalancer do |loadBalancing|
+   # loadBalancing.vm.box = "ubuntu/xenial64"
+   # loadBalancing.vm.hostname = "LoadBalancer"
+   # loadBalancing.vm.network :private_network, ip:"192.168.15.4"
+   # loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
     #loadBalancing.vm.synced_folder""
     #loadBalancing.vm.synced_folder"
-    loadBalancing.vm.provision :shell, path: "bootstrap.sh"
 
-    loadBalancing.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.cpus = "1"
-    end
-  end
+   # loadBalancing.vm.provider "virtualbox" do |vb|
+    #  vb.memory = "512"
+    #  vb.cpus = "1"
+   # end
+  #end
 
   #Webservers
-  (1..1).each do |i|
-    config.vm.define "Web#{i}" do |web|
-      web.vm.box = "apache2"
-      web.vm.hostname = "Webserver"
-      web.vm.network :private_network, ip:"192.168.15.#{4+i}"
+  #(1..1).each do |i|
+   # config.vm.define "Web#{i}" do |web|
+    #  web.vm.box = "ubuntu/xenial64"
+     # web.vm.hostname = "Webserver"
+      #web.vm.network :private_network, ip:"192.168.15.#{4+i}"
       #web.vm.synced_folder""
       #web.vm.synced_folder"
-      web.vm.provision :shell, path: "bootstrap.sh"
     
-      web.vm.provider "virtualbox" do |vb|
-        vb.memory = "512"
-        vb.cpus = "1"
-    end
-  end
+      #web.vm.provider "virtualbox" do |vb|
+       # vb.memory = "512"
+        #vb.cpus = "1"
+    #end
+  #end
 
   #Backend servers
-  (1..1).each do |i|
-    config.vm.define "Backend#{i}" do |backend|
-    backend.vm.box = "ubuntu/xenial64"
-    backend.vm.hostname = "Backend"
-    backend.vm.network :private_network, ip:"192.168.15.#{10+i}"
+  #(1..1).each do |i|
+   # config.vm.define "Backend#{i}" do |backend|
+    #backend.vm.box = "ubuntu/xenial64"
+    #backend.vm.hostname = "Backend"
+    #backend.vm.network :private_network, ip:"192.168.15.#{10+i}"
       #backend.vm.synced_folder""
       #backend.vm.synced_folder"
-      backend.vm.provision :shell, path: "bootstrap.sh"
     
-      backend.vm.provider "virtualbox" do |vb|
-        vb.memory = "512"
-        vb.cpus = "1"
-    end
-  end
+    #  backend.vm.provider "virtualbox" do |vb|
+     #   vb.memory = "512"
+      #  vb.cpus = "1"
+    #end
+  #end
 
+#end
 end
-end
 
 
 
 
-end
+#end

@@ -1,0 +1,14 @@
+#Web
+- hosts: web
+  tasks:
+    -name: install nginx
+     apt: name=nginx, state=installed
+     command: echo "nginx installed"
+
+
+    service:
+      name: nginx
+      state: started
+      become: yes
+      become_method: sudo
+      command: echo "Checked nginx state"
