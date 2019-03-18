@@ -54,7 +54,7 @@ Vagrant.configure("2") do |config|
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-      web.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
+      web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
     
       web.vm.provider "virtualbox" do |vb|
         vb.memory = "512"

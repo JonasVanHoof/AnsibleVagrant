@@ -1,1 +1,1 @@
-cat /labo1_vagrant/cfg/ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+cat /vagrant/cfg/ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
