@@ -35,32 +35,33 @@ Vagrant.configure("2") do |config|
   #end
 
   #LoadBalancer
-  config.vm.define :LoadBalancer do |loadBalancing|
-    loadBalancing.vm.box = "ubuntu/xenial64"
-    loadBalancing.vm.hostname = "LoadBalancer"
-    loadBalancing.vm.network :private_network, ip:"192.168.15.4"
-    loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
-    loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+  #config.vm.define :LoadBalancer do |loadBalancing|
+   # loadBalancing.vm.box = "ubuntu/xenial64"
+    #loadBalancing.vm.hostname = "LoadBalancer"
+    #loadBalancing.vm.network :private_network, ip:"192.168.15.4"
+    #loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
+    #loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
-    loadBalancing.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.cpus = "1"
-    end
-  end
+    #loadBalancing.vm.provider "virtualbox" do |vb|
+     # vb.memory = "512"
+     # vb.cpus = "1"
+    #end
+  #end
   
   #Webservers
-  #(1..4).each do |i|
-    #config.vm.define "Web#{i}" do |web|
-      #web.vm.box = "ubuntu/xenial64"
-      #web.vm.hostname = "Webserver"
-      #web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-      #web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+  (1..1).each do |i|
+    config.vm.define "Web#{i}" do |web|
+      web.vm.box = "ubuntu/xenial64"
+      web.vm.hostname = "Webserver"
+      web.vm.network :private_network, ip:"192.168.15.#{4+i}"
+      web.vm.network "forwarded_port", guest: 80, host: 2019
+      web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
     
-     # web.vm.provider "virtualbox" do |vb|
-    #    vb.memory = "512"
-   #     vb.cpus = "1"
-  #  end
-  #end
+      web.vm.provider "virtualbox" do |vb|
+        vb.memory = "512"
+        vb.cpus = "1"
+    end
+  end
 
   #Backend servers
   #(1..1).each do |i|
@@ -77,7 +78,7 @@ Vagrant.configure("2") do |config|
   #end
 
 #end
-#end
+end
 
 
 
