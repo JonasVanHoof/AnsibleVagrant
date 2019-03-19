@@ -45,3 +45,8 @@ database
 [lb]
 loadBalancer
 EOF
+
+ansible-playbook playbooks/frontend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+#ansible-playbook playbooks/backend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+#ansible-playbook playbooks/db.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+#ansible-playbook playbooks/lb.yml -e 'ansible_python_interpreter=/usr/bin/python3'

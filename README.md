@@ -131,6 +131,8 @@ ansible-playbook ~/playbooks/lb.yml
 ansible-playbook ~/playbooks/backend.yml
 ansible-playbook ~/playbooks/db.yml
 
+ansible-playbook playbook/frontend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+
 #### vagrant ssh database
 @database: mysql -u root -p
 

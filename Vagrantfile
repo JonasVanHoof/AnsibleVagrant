@@ -49,13 +49,14 @@ Vagrant.configure("2") do |config|
   #end
   
   #Webservers
-  (1..1).each do |i|
+  (1..2).each do |i|
     config.vm.define "Web#{i}" do |web|
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
       web.vm.network "forwarded_port", guest: 80, host: 2019
       web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+      web.vm.synced_folder "frontend_app", "/var/www/html/"
     
       web.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
