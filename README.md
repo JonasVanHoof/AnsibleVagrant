@@ -133,4 +133,12 @@ ansible-playbook ~/playbooks/db.yml
 
 #### vagrant ssh database
 @database: mysql -u root -p
+
+#### Problems
+
+Localhost unreachable
+
+shell provisioner:
+* `path` for shell provisioner does not exist on the host system: /cfg/ssh/addSSHKey.sh
+FIXED => loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
       

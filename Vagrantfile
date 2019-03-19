@@ -22,32 +22,32 @@ Vagrant.configure("2") do |config|
   end
 
   #Database
-  config.vm.define :database do |db|
-    db.vm.box = "ubuntu/xenial64"
-    db.vm.hostname = "Database"
-    db.vm.network :private_network, ip:"192.168.15.3"
-    db.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
+  #config.vm.define :database do |db|
+   # db.vm.box = "ubuntu/xenial64"
+    #db.vm.hostname = "Database"
+    #db.vm.network :private_network, ip:"192.168.15.3"
+    #db.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
-    db.vm.provider "virtualbox" do |vb|
+    #db.vm.provider "virtualbox" do |vb|
+     # vb.memory = "512"
+     # vb.cpus = "1"
+    #end
+  #end
+
+  #LoadBalancer
+  config.vm.define :LoadBalancer do |loadBalancing|
+    loadBalancing.vm.box = "ubuntu/xenial64"
+    loadBalancing.vm.hostname = "LoadBalancer"
+    loadBalancing.vm.network :private_network, ip:"192.168.15.4"
+    loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
+    loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+
+    loadBalancing.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
       vb.cpus = "1"
     end
   end
-
-  #LoadBalancer
-  #config.vm.define :LoadBalancer do |loadBalancing|
-   # loadBalancing.vm.box = "ubuntu/xenial64"
-   # loadBalancing.vm.hostname = "LoadBalancer"
-   # loadBalancing.vm.network :private_network, ip:"192.168.15.4"
-   # loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
-   # loadBalancing.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
-
-   # loadBalancing.vm.provider "virtualbox" do |vb|
-    #  vb.memory = "512"
-    #  vb.cpus = "1"
-   # end
-  #end
-
+  
   #Webservers
   #(1..4).each do |i|
     #config.vm.define "Web#{i}" do |web|
@@ -68,7 +68,7 @@ Vagrant.configure("2") do |config|
     #backend.vm.box = "ubuntu/xenial64"
     #backend.vm.hostname = "Backend"
     #backend.vm.network :private_network, ip:"192.168.15.#{10+i}"
-    #backend.vm.provision :shell, path: "/cfg/ssh/addSSHKey.sh"
+    #backend.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
     
     #  backend.vm.provider "virtualbox" do |vb|
      #   vb.memory = "512"
