@@ -1,12 +1,18 @@
 #Web
- - hosts: web
+ - hosts: all
    sudo: yes
-  
+
    tasks:
     - name: Install nginx
       apt: name=nginx state=present
-    - name: content
-      template: src=labo1_vagrant/frontend_app/index.html dest=/var/www/html/index.html
+
+    - name: start nginx
+      service:
+          name: nginx
+          state: started
+
+    - name: Select content
+      template: src=/vagrant/frontend_app/index.html dest=/var/www/html
 
    handlers:
     - name: Restart nginx

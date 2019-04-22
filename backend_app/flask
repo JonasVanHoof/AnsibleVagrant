@@ -1,0 +1,19 @@
+#! /bin/sh
+# /etc/init.d/flask
+
+case "$1" in
+  start)
+    echo "Starting flask server"
+    python3 /home/vagrant/backend.py &
+    ;;
+  stop)
+    echo "Stopping flask server"
+    killall python3
+    ;;
+  *)
+    echo "Usage: /etc/init.d/flask{start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

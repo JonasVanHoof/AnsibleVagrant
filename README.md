@@ -38,7 +38,7 @@ apt-get -y install ansible
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-    
+
       web.vm.provider "virtualbox" do |vb|
         vb.memory = "512"
         vb.cpus = "1"
@@ -57,7 +57,7 @@ This is almost the same for every server:
 
 -Backend servers x 4
 
-In the boostrap.sh file => 
+In the boostrap.sh file =>
 Add the hosts to the host file /etc/hosts
 
 cat >> /etc/hosts <<EOF
@@ -67,7 +67,7 @@ cat >> /etc/hosts <<EOF
 192.168.15.4 loadBalancer
 192.168.15.5 web1
 192.168.15.6 web2
-wdqdqw192.168.15.7 web3
+192.168.15.7 web3
 192.168.15.8 web4
 192.168.15.9 backend1
 192.168.15.10 backend2
@@ -102,7 +102,7 @@ EOF
 #Web
  - hosts: web
    sudo: yes
-  
+
    tasks:
     - name: Install nginx
       apt: name=nginx state=present
@@ -112,7 +112,7 @@ EOF
    handlers:
     - name: Restart nginx
       service: name=nginx state=restarted
-      
+
 #### Generate an ssh-key
 
 @management: ssh-keygen
@@ -126,12 +126,10 @@ share the sshkey with the servers => addSSHKey.sh =>
 cat /vagrant/cfg/ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
 
 Add the playbooks to the right server =>
-ansible-playbook ~/playbooks/frontend.yml
-ansible-playbook ~/playbooks/lb.yml
-ansible-playbook ~/playbooks/backend.yml
-ansible-playbook ~/playbooks/db.yml
-
-ansible-playbook playbook/frontend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook playbooks/frontend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook playbooks/backend.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook playbooks/db.yml -e 'ansible_python_interpreter=/usr/bin/python3'
+ansible-playbook playbooks/lb.yml -e 'ansible_python_interpreter=/usr/bin/python3'
 
 #### vagrant ssh database
 @database: mysql -u root -p
@@ -143,4 +141,3 @@ Localhost unreachable
 shell provisioner:
 * `path` for shell provisioner does not exist on the host system: /cfg/ssh/addSSHKey.sh
 FIXED => loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
-      

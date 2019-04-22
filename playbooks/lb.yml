@@ -1,0 +1,29 @@
+#Loadbalancer
+  - hosts: all
+    sudo: yes
+
+    tasks:
+    - apt_repository: ppa:vbernat/haproxy-1.5 state=present
+
+    - name: Update system
+      command: apt update
+
+    - name: Install haproxy
+      apt: haproxy
+
+    - name: Install socat
+      apt: socat
+
+    - name: Enable HAProxy
+      lineinfile: dest=/etc/default/haproxy regexp="^ENABLED" line="ENABLED=1"
+      notify: Restart HAProxy
+
+    - name: Deploy HAProxy config
+      template:
+        src: /vagrant/cfg/haproxy.cfg
+        dest: /etc/haproxy/haproxy.cfg
+      notify: Restart HAProxy
+
+    handlers:
+      - name: Restart HAProxy
+        service: name=haproxy state=restarted

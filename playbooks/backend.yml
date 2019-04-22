@@ -1,0 +1,46 @@
+#backend
+ - hosts: all
+   sudo: yes
+
+   tasks:
+    #- apt_repository: repo=ppa:jonathonf/python-3.6 state=present
+    # - name: Update system
+    #   command: apt update
+
+    # - name: Install python 3.6
+    #   apt:
+    #     pkg: ['python3.6', 'build-essential', 'python-virtualenv', 'python-mysqldb']
+
+    - name: Download pip
+      command: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py warn=false
+
+    - name: Install pip
+      command: python3 get-pip.py
+
+    - pip:
+        name:
+         - Flask
+         - flask-cors
+
+    - name: Copy backend scripts to the flask server
+      copy:
+        src: /vagrant/backend_app/server.py
+        dest: /home/vagrant/backend.py
+        owner: vagrant
+        group: vagrant
+        mode: 0770
+
+    - name: Copy init.d script
+      copy:
+        src: /vagrant/backend_app/flask
+        dest: /etc/init.d/flask
+        owner: root
+        group: root
+        mode: 0775
+
+    - name: Add flask daemon to the startup configs
+      shell: update-rc.d flask defaults
+
+    - name: Start flask script
+      service:
+        name: flask state=started
