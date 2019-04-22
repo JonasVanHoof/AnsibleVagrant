@@ -3,14 +3,6 @@
    sudo: yes
 
    tasks:
-    #- apt_repository: repo=ppa:jonathonf/python-3.6 state=present
-    # - name: Update system
-    #   command: apt update
-
-    # - name: Install python 3.6
-    #   apt:
-    #     pkg: ['python3.6', 'build-essential', 'python-virtualenv', 'python-mysqldb']
-
     - name: Download pip
       command: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py warn=false
 

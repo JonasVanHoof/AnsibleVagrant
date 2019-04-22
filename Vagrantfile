@@ -5,23 +5,6 @@
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-
-  # #Management
-  # config.vm.define :management do |management|
-  #   management.vm.box = "ubuntu/xenial64"
-  #   management.vm.hostname = "Management"
-  #   management.vm.network :private_network, ip:"192.168.15.2"
-  #   management.vm.synced_folder "playbooks", "/home/vagrant/playbooks"
-  #   management.vm.synced_folder "cfg", "/home/vagrant/cfg"
-  #   management.vm.provision :shell, path: "bootstrap.sh"
-
-  #   management.vm.provider "virtualbox" do |vb|
-  #     vb.memory = "512"
-  #     vb.cpus = "1"
-
-  #   end
-  # end
-
   #Database
   #config.vm.define :database do |db|
    # db.vm.box = "ubuntu/xenial64"
@@ -36,18 +19,19 @@ Vagrant.configure("2") do |config|
   #end
 
   #LoadBalancer
-  #config.vm.define :LoadBalancer do |loadBalancing|
-   # loadBalancing.vm.box = "ubuntu/xenial64"
-    #loadBalancing.vm.hostname = "LoadBalancer"
-    #loadBalancing.vm.network :private_network, ip:"192.168.15.4"
-    #loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
-    #loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+  config.vm.define :LoadBalancer do |loadBalancing|
+    loadBalancing.vm.box = "ubuntu/xenial64"
+    loadBalancing.vm.hostname = "LoadBalancer"
+    loadBalancing.vm.network :private_network, ip:"192.168.15.4"
+    loadBalancing.vm.network "forwarded_port", guest: 80, host: 2019
+    loadBalancing.vm.network "forwarded_port", guest: 5000, host: 2015
+    loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
-    #loadBalancing.vm.provider "virtualbox" do |vb|
-     # vb.memory = "512"
-     # vb.cpus = "1"
-    #end
-  #end
+    loadBalancing.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.cpus = "1"
+    end
+  end
 
   #Webservers
   (1..1).each do |i|
@@ -56,8 +40,6 @@ Vagrant.configure("2") do |config|
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
       web.vm.network "forwarded_port", guest: 80, host: "200#{i}"
-      #web.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
-      #web.vm.synced_folder "frontend_app", "/var/www/html/"/
 
       web.vm.provision "ansible_local" do |ansible|
         ansible.playbook = "playbooks/frontend.yml"
