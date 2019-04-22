@@ -3,16 +3,12 @@
     sudo: yes
 
     tasks:
-    - apt_repository: ppa:vbernat/haproxy-1.5 state=present
-
-    - name: Update system
-      command: apt update
-
-    - name: Install haproxy
-      apt: haproxy
-
-    - name: Install socat
-      apt: socat
+    - name: Install haproxy & socat
+      apt:
+        pkg:
+          - haproxy
+          - socat
+        state: latest
 
     - name: Enable HAProxy
       lineinfile: dest=/etc/default/haproxy regexp="^ENABLED" line="ENABLED=1"

@@ -6,17 +6,21 @@
 # you're doing.
 Vagrant.configure("2") do |config|
   #Database
-  #config.vm.define :database do |db|
-   # db.vm.box = "ubuntu/xenial64"
-    #db.vm.hostname = "Database"
-    #db.vm.network :private_network, ip:"192.168.15.3"
-    #db.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
+  config.vm.define :database do |db|
+    db.vm.box = "ubuntu/xenial64"
+    db.vm.hostname = "Database"
+    db.vm.network :private_network, ip:"192.168.15.3"
+    db.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
-    #db.vm.provider "virtualbox" do |vb|
-     # vb.memory = "512"
-     # vb.cpus = "1"
-    #end
-  #end
+    db.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "playbooks/db.yml"
+    end
+
+    db.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.cpus = "1"
+    end
+  end
 
   #LoadBalancer
   config.vm.define :LoadBalancer do |loadBalancing|
@@ -43,7 +47,7 @@ Vagrant.configure("2") do |config|
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
       web.vm.network :private_network, ip:"192.168.15.#{4+i}"
-      web.vm.network "forwarded_port", guest: 80, host: "200#{i}"
+      #web.vm.network "forwarded_port", guest: 80, host: "200#{i}"
 
       web.vm.provision "ansible_local" do |ansible|
         ansible.playbook = "playbooks/frontend.yml"
@@ -61,7 +65,7 @@ Vagrant.configure("2") do |config|
     backend.vm.box = "ubuntu/xenial64"
     backend.vm.hostname = "Backend#{i}"
     backend.vm.network :private_network, ip:"192.168.15.#{10+i}"
-    backend.vm.network "forwarded_port", guest: 5000, host: "100#{i}"
+    #backend.vm.network "forwarded_port", guest: 5000, host: "100#{i}"
     backend.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
     backend.vm.provision "ansible_local" do |ansible|

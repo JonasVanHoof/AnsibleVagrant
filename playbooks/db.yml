@@ -1,0 +1,11 @@
+# Database
+- hosts: all
+  sudo: no
+
+  tasks:
+  - name: Install MySQL
+    apt: pkg=mysql-server state=latest
+
+  - name: Start MySQL
+    service:
+      name: mysql state=started
