@@ -27,6 +27,10 @@ Vagrant.configure("2") do |config|
     loadBalancing.vm.network "forwarded_port", guest: 5000, host: 2015
     loadBalancing.vm.provision :shell, path: "cfg/ssh/addSSHKey.sh"
 
+    loadBalancing.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "playbooks/lb.yml"
+    end
+
     loadBalancing.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
       vb.cpus = "1"
@@ -72,8 +76,4 @@ Vagrant.configure("2") do |config|
 
 end
 end
-
-
-
-
 end
