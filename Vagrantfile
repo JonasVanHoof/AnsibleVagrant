@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
   end
 
   #Webservers
-  (1..1).each do |i|
+  (1..4).each do |i|
     config.vm.define "Web#{i}" do |web|
       web.vm.box = "ubuntu/xenial64"
       web.vm.hostname = "Webserver"
@@ -60,7 +60,7 @@ Vagrant.configure("2") do |config|
   end
 
   #Backend servers
-  (1..1).each do |i|
+  (1..4).each do |i|
     config.vm.define "Backend#{i}" do |backend|
     backend.vm.box = "ubuntu/xenial64"
     backend.vm.hostname = "Backend#{i}"
